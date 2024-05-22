@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import productsapi.application.model.enums.Status;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +16,7 @@ public class ProductTest {
 
     @BeforeEach
     void setUp(){
-        productMock = new Product(UUID.randomUUID(), "Product 1", new BigDecimal("10.00"), Status.DISABLED);
+        productMock = new Product(1L, "Product 1", new BigDecimal("10.00"), Status.DISABLED);
     }
 
     @Test

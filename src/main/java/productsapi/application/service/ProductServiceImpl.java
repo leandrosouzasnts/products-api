@@ -1,9 +1,10 @@
 package productsapi.application.service;
 
 import productsapi.application.model.Product;
+import productsapi.application.model.enums.Status;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.Random;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -16,25 +17,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product get(UUID productId) {
-        //logger.info("product persistence get --step:start");
-
-        Product product = productPersistence.get(productId);
-
-        //logger.info("product persistence get --step:end");
-
-        return product;
+    public Product get(Long productId) {
+        return productPersistence.get(productId);
     }
 
     @Override
     public Product create(String name, BigDecimal price) throws Exception {
-        Product product = new Product(name, price);
-
+        Random random = new Random();
+        Product product = new Product(random.nextLong() * -1,name, price, Status.ENABLED);
         return productPersistence.save(product);
     }
 
     @Override
-    public Product enable(UUID productId) {
+    public Product enable(Long productId) {
         Product product = this.get(productId);
 
         product.enable();
@@ -43,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product disable(UUID productId) {
+    public Product disable(Long productId) {
         Product product = this.get(productId);
 
         product.disable();

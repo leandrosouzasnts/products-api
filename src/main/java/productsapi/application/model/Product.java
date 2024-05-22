@@ -3,29 +3,20 @@ package productsapi.application.model;
 import productsapi.application.model.enums.Status;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+
 
 public class Product {
 
-    private UUID id;
+    private Long id;
     private String name;
     private BigDecimal price;
     private Status status;
 
-    public Product(UUID id, String name, BigDecimal price, Status status) {
+    public Product(Long id, String name, BigDecimal price, Status status) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.status = status;
-    }
-
-    public Product(String name, BigDecimal price) throws Exception {
-        this.id = UUID.randomUUID();
-        this.name = name;
-        this.price = price;
-        if (this.price.compareTo(BigDecimal.ZERO) <= 0){
-            throw new Exception("price must be greater than zero");
-        }
     }
 
     public void enable(){
@@ -55,7 +46,7 @@ public class Product {
         return this.price;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
