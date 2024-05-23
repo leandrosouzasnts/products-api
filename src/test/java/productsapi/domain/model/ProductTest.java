@@ -1,9 +1,9 @@
-package productsapi.application.model;
+package productsapi.domain.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import productsapi.application.model.enums.Status;
+import productsapi.domain.model.enums.Status;
 
 import java.math.BigDecimal;
 

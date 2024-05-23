@@ -1,7 +1,7 @@
-package productsapi.infra.adapters.persistence;
+package productsapi.adapters.persistence;
 
 import org.springframework.stereotype.Component;
-import productsapi.infra.entities.ProductEntity;
+import productsapi.domain.persistence.entities.ProductEntity;
 
 import java.util.Optional;
 

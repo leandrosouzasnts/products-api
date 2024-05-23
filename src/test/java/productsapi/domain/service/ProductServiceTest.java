@@ -1,11 +1,13 @@
-package productsapi.application.service;
+package productsapi.domain.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import productsapi.application.model.Product;
+import productsapi.domain.model.Product;
+import productsapi.domain.persistence.ReadProductPersistenceAdapter;
+import productsapi.domain.persistence.WriteProductPersistenceAdapter;
 
 import java.math.BigDecimal;
 
@@ -14,17 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-import static productsapi.application.model.enums.Status.DISABLED;
-import static productsapi.application.model.enums.Status.ENABLED;
+import static productsapi.domain.model.enums.Status.DISABLED;
+import static productsapi.domain.model.enums.Status.ENABLED;
 
 @SpringBootTest
 class ProductServiceTest {
 
     @InjectMocks
-    ProductServiceImpl productServiceMock ;
+    ProductService productServiceMock;
 
     @Mock
-    ProductPersistence productPersistenceMock;
+    WriteProductPersistenceAdapter writeProductPersistenceAdapter;
+
+    @Mock
+    ReadProductPersistenceAdapter readProductPersistenceAdapter;
 
     Product productMock;
 
@@ -35,7 +40,7 @@ class ProductServiceTest {
 
     @Test
     void givenValidProduct_whenGetByUUID_thenReturnsSuccessfully() {
-        when(productPersistenceMock.get(anyLong())).thenReturn(productMock);
+        when(readProductPersistenceAdapter.get(anyLong())).thenReturn(productMock);
 
         Product productTest = productServiceMock.get(1L);
 
@@ -44,7 +49,7 @@ class ProductServiceTest {
 
     @Test
     void givenValidProduct_whenCreated_thenReturnsSuccessfully() throws Exception {
-        when(productPersistenceMock.save(any())).thenReturn(productMock);
+        when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
 
         Product productTest = productServiceMock.create("Product 1", BigDecimal.valueOf(200));
 
@@ -54,7 +59,7 @@ class ProductServiceTest {
     @Test
     void givenValidProduct_whenEnabled_thenReturnsSuccessfully() throws Exception {
         //Setup
-        when(productPersistenceMock.save(any())).thenReturn(productMock);
+        when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
         when(productServiceMock.get(1L)).thenReturn(productMock);
 
         //Act
@@ -67,14 +72,14 @@ class ProductServiceTest {
 
     @Test
     void givenValidProduct_whenDisabled_thenReturnsSuccessfully() throws Exception {
-        //Setup
-        when(productPersistenceMock.save(any())).thenReturn(productMock);
+        //Arrange
+        when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
         when(productServiceMock.get(1L)).thenReturn(productMock);
 
         //Act
         Product productTest = productServiceMock.disable(1L);
 
-        //Verify
+        //Assert
         assertNotNull(productTest);
         assertEquals(DISABLED, productTest.getStatus());
     }

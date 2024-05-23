@@ -1,6 +1,6 @@
-package productsapi.infra.adapters.persistence;
+package productsapi.adapters.persistence;
 
-import productsapi.infra.entities.ProductEntity;
+import productsapi.domain.persistence.entities.ProductEntity;
 
 public interface ProductRepository {
     ProductEntity get(Long productId);

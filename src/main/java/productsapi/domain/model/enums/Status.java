@@ -1,4 +1,4 @@
-package productsapi.application.model.enums;
+package productsapi.domain.model.enums;
 
 public enum Status {
     ENABLED,

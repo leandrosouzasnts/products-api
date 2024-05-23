@@ -1,6 +1,6 @@
-package productsapi.application.model;
+package productsapi.domain.model;
 
-import productsapi.application.model.enums.Status;
+import productsapi.domain.model.enums.Status;
 
 import java.math.BigDecimal;
 
@@ -11,6 +11,8 @@ public class Product {
     private String name;
     private BigDecimal price;
     private Status status;
+
+    public Product(){};
 
     public Product(Long id, String name, BigDecimal price, Status status) {
         this.id = id;
@@ -52,5 +54,9 @@ public class Product {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 }

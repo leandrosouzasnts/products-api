@@ -1,10 +1,10 @@
-package productsapi.application.service;
+package productsapi.domain.service;
 
-import productsapi.application.model.Product;
+import productsapi.domain.model.Product;
 
 import java.math.BigDecimal;
 
-public interface ProductService {
+public interface ProductServiceUseCase {
 
     Product get(Long productId);
     Product create(String name, BigDecimal price) throws Exception;
