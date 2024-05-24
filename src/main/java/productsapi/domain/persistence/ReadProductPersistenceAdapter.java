@@ -1,10 +1,12 @@
 package productsapi.domain.persistence;
 
 import org.springframework.beans.BeanUtils;
-import productsapi.adapters.persistence.ProductRepository;
+import org.springframework.stereotype.Component;
+import productsapi.api.rest.adapters.persistence.ProductRepository;
 import productsapi.domain.model.Product;
 import productsapi.domain.persistence.entities.ProductEntity;
 
+@Component
 public class ReadProductPersistenceAdapter implements ReadProductPersistencePort {
 
     private final ProductRepository productRepository;

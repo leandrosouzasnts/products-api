@@ -1,4 +1,4 @@
-package productsapi.adapters.persistence;
+package productsapi.api.rest.adapters.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

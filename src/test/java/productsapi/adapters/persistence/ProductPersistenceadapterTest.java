@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import productsapi.api.rest.adapters.persistence.JpaProductRepository;
+import productsapi.api.rest.adapters.persistence.ProductPersistenceAdapter;
 import productsapi.domain.model.enums.Status;
 import productsapi.domain.persistence.entities.ProductEntity;
 

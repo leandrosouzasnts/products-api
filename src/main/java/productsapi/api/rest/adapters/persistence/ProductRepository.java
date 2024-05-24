@@ -1,4 +1,4 @@
-package productsapi.adapters.persistence;
+package productsapi.api.rest.adapters.persistence;
 
 import productsapi.domain.persistence.entities.ProductEntity;
 

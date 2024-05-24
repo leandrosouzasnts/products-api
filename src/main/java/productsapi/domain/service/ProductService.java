@@ -1,5 +1,6 @@
 package productsapi.domain.service;
 
+import org.springframework.stereotype.Service;
 import productsapi.domain.model.Product;
 import productsapi.domain.model.enums.Status;
 import productsapi.domain.persistence.ReadProductPersistencePort;
@@ -8,6 +9,7 @@ import productsapi.domain.persistence.WriteProductPersistencePort;
 import java.math.BigDecimal;
 import java.util.Random;
 
+@Service
 public class ProductService implements ProductServiceUseCase {
 
     private final WriteProductPersistencePort writeProductPersistencePort;
@@ -27,7 +29,7 @@ public class ProductService implements ProductServiceUseCase {
 
     @Override
     public Product create(String name, BigDecimal price) throws Exception {
-        Long id = random.nextLong();
+        Long id = random.nextLong() * -1;
         Product product = new Product(id, name, price, Status.ENABLED);
         return writeProductPersistencePort.save(product);
     }
