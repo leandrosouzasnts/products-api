@@ -1,5 +1,8 @@
 package productsapi.api.rest.endpoints;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,10 @@ public class ProductContoller {
         this.productServiceUseCase = productServiceUseCase;
     }
 
+    @Operation(description = "Add new product in base")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product added")
+    })
     @PostMapping
     public ResponseEntity<Product> create(@RequestBody ProductRequest productRequest) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(productServiceUseCase.create(productRequest.name(), productRequest.price()));
