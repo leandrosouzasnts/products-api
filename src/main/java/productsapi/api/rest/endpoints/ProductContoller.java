@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import productsapi.domain.model.Product;
 import productsapi.domain.model.request.ProductRequest;
+import productsapi.domain.model.request.UpdateStatusEnabledProductTO;
 import productsapi.domain.service.ProductServiceUseCase;
 
 @RestController
@@ -31,6 +32,26 @@ public class ProductContoller {
         } else {
             return ResponseEntity.notFound().build();
         }
-
     }
+
+    @PatchMapping("/{productId}/disabled")
+    public ResponseEntity<Product> disabled(@PathVariable String productId) {
+       Product product = productServiceUseCase.get(productId);
+        if (product != null) {
+            return ResponseEntity.ok(productServiceUseCase.disable(productId));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{productId}/enabled")
+    public ResponseEntity<Product> enabled(@PathVariable String productId, @RequestBody UpdateStatusEnabledProductTO to) {
+        Product product = productServiceUseCase.get(productId);
+        if (product != null) {
+            return ResponseEntity.ok(productServiceUseCase.enable(productId, to));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

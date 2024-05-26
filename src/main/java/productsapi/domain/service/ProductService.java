@@ -3,6 +3,7 @@ package productsapi.domain.service;
 import org.springframework.stereotype.Service;
 import productsapi.domain.model.Product;
 import productsapi.domain.model.enums.Status;
+import productsapi.domain.model.request.UpdateStatusEnabledProductTO;
 import productsapi.domain.persistence.ReadProductPersistencePort;
 import productsapi.domain.persistence.WriteProductPersistencePort;
 
@@ -35,12 +36,15 @@ public class ProductService implements ProductServiceUseCase {
     }
 
     @Override
-    public Product enable(String productId) {
+    public Product enable(String productId, UpdateStatusEnabledProductTO to) {
         Product product = this.get(productId);
 
-        product.enable();
-
-        return writeProductPersistencePort.save(product);
+        if (product != null) {
+            product.setPrice(to.price());
+            product.enable();
+            return writeProductPersistencePort.save(product);
+        } else
+            return null;
     }
 
     @Override

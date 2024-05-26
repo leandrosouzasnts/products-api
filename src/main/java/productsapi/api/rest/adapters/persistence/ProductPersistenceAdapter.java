@@ -6,7 +6,7 @@ import productsapi.domain.persistence.entities.ProductEntity;
 import java.util.Optional;
 
 @Component
-public class ProductPersistenceAdapter implements ProductRepository{
+public class ProductPersistenceAdapter implements ProductRepository {
     private final JpaProductRepository jpaProductRepository;
 
     public ProductPersistenceAdapter(JpaProductRepository jpaProductRepository) {
@@ -16,7 +16,7 @@ public class ProductPersistenceAdapter implements ProductRepository{
     @Override
     public ProductEntity get(String productId) {
         Optional<ProductEntity> productEntity = jpaProductRepository.findById(productId);
-        if(productEntity.isPresent()) {
+        if (productEntity.isPresent()) {
             return productEntity.get();
         }
         return null;

@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import productsapi.domain.model.Product;
+import productsapi.domain.model.request.UpdateStatusEnabledProductTO;
 import productsapi.domain.persistence.ReadProductPersistenceAdapter;
 import productsapi.domain.persistence.WriteProductPersistenceAdapter;
 
@@ -61,8 +62,12 @@ class ProductServiceTest {
         when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
         when(productServiceMock.get("1")).thenReturn(productMock);
 
+        UpdateStatusEnabledProductTO to = UpdateStatusEnabledProductTO
+                .builder()
+                    .price(BigDecimal.valueOf(100.0))
+                .build();
         //Act
-        Product productTest = productServiceMock.enable("1");
+        Product productTest = productServiceMock.enable("1", to);
 
         //Verify
         assertNotNull(productTest);

@@ -19,8 +19,7 @@ import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,12 +47,12 @@ class ProductControllerIT {
     void givenValidProduct_whenCreateProduct_thenReturnsSuccessfully() throws Exception {
         //when
         Mockito.when(productServiceUseCase.create(anyString(), any())).thenReturn(product);
-        String inputJson = "{\"name\":\"Product Test\",\"price\":100}";
+        String jsonCreated = "{\"name\":\"Product Test\",\"price\":100}";
 
         //act //verify
         mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJson))
+                        .content(jsonCreated))
                 .andExpect(status().isCreated());
 
     }
@@ -63,11 +62,11 @@ class ProductControllerIT {
         Mockito.when(productServiceUseCase.get(anyString())).thenReturn(product);
         Mockito.when(productServiceUseCase.create(anyString(), any())).thenReturn(product);
 
-        String inputJson = "{\"name\":\"Product Test\",\"price\":100}";
+        String jsonCreated = "{\"name\":\"Product Test\",\"price\":100}";
 
         MvcResult result = mockMvc.perform(post("/products")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJson))
+                        .content(jsonCreated))
                 .andExpect(status().isCreated())
                 .andReturn();
 
@@ -80,6 +79,55 @@ class ProductControllerIT {
         // Usa o ID do produto criado para a requisição GET
         mockMvc.perform(get("/products/{id}", createdProduct.getId())
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(createdProduct)));
+    }
+
+    @Test
+    void givenValidProduct_whenDisabled_thenReturnsSuccessfully() throws Exception {
+        Mockito.when(productServiceUseCase.get(anyString())).thenReturn(product);
+        Mockito.when(productServiceUseCase.create(anyString(), any())).thenReturn(product);
+
+        String jsonCreated = "{\"name\":\"Product Test\",\"price\":100}";
+
+        MvcResult result = mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonCreated))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Product createdProduct = objectMapper.readValue(contentAsString, Product.class);
+        createdProduct.disable();
+
+        mockMvc.perform(patch("/products/{productId}/disabled", createdProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(createdProduct)));
+    }
+
+    @Test
+    void givenValidProduct_whenEnabled_thenReturnsSuccessfully() throws Exception {
+        Mockito.when(productServiceUseCase.get(anyString())).thenReturn(product);
+        Mockito.when(productServiceUseCase.create(anyString(), any())).thenReturn(product);
+
+        String jsonCreated = "{\"name\":\"Product Test\",\"price\":100}";
+        String jsonEnabled = "{\"price\":100}";
+
+        MvcResult result = mockMvc.perform(post("/products")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonCreated))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String contentAsString = result.getResponse().getContentAsString();
+
+        Product createdProduct = objectMapper.readValue(contentAsString, Product.class);
+
+        mockMvc.perform(patch("/products/{productId}/enabled", createdProduct.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonEnabled))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(createdProduct)));
     }
