@@ -14,7 +14,7 @@ public class ProductPersistenceAdapter implements ProductRepository{
     }
 
     @Override
-    public ProductEntity get(Long productId) {
+    public ProductEntity get(String productId) {
         Optional<ProductEntity> productEntity = jpaProductRepository.findById(productId);
         if(productEntity.isPresent()) {
             return productEntity.get();

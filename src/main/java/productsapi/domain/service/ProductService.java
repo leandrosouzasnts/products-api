@@ -8,6 +8,7 @@ import productsapi.domain.persistence.WriteProductPersistencePort;
 
 import java.math.BigDecimal;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class ProductService implements ProductServiceUseCase {
@@ -23,19 +24,18 @@ public class ProductService implements ProductServiceUseCase {
     }
 
     @Override
-    public Product get(Long productId) {
+    public Product get(String productId) {
         return readProductPersistencePort.get(productId);
     }
 
     @Override
     public Product create(String name, BigDecimal price) throws Exception {
-        Long id = random.nextLong() * -1;
-        Product product = new Product(id, name, price, Status.ENABLED);
+        Product product = new Product(UUID.randomUUID().toString(), name, price, Status.ENABLED);
         return writeProductPersistencePort.save(product);
     }
 
     @Override
-    public Product enable(Long productId) {
+    public Product enable(String productId) {
         Product product = this.get(productId);
 
         product.enable();
@@ -44,7 +44,7 @@ public class ProductService implements ProductServiceUseCase {
     }
 
     @Override
-    public Product disable(Long productId) {
+    public Product disable(String productId) {
         Product product = this.get(productId);
 
         product.disable();

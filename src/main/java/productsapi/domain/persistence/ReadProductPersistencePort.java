@@ -5,5 +5,5 @@ import productsapi.domain.model.Product;
 
 public interface ReadProductPersistencePort {
 
-    Product get(Long id);
+    Product get(String id);
 }

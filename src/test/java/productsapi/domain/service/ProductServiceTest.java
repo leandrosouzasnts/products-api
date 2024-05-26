@@ -13,8 +13,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static productsapi.domain.model.enums.Status.DISABLED;
 import static productsapi.domain.model.enums.Status.ENABLED;
@@ -35,14 +34,14 @@ class ProductServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        productMock = new Product(1L, "Product 1", BigDecimal.valueOf(100), ENABLED);
+        productMock = new Product("1", "Product 1", BigDecimal.valueOf(100), ENABLED);
     }
 
     @Test
     void givenValidProduct_whenGetByUUID_thenReturnsSuccessfully() {
-        when(readProductPersistenceAdapter.get(anyLong())).thenReturn(productMock);
+        when(readProductPersistenceAdapter.get(anyString())).thenReturn(productMock);
 
-        Product productTest = productServiceMock.get(1L);
+        Product productTest = productServiceMock.get("1");
 
         assertEquals(productTest.getId(), productMock.getId());
     }
@@ -60,10 +59,10 @@ class ProductServiceTest {
     void givenValidProduct_whenEnabled_thenReturnsSuccessfully() throws Exception {
         //Setup
         when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
-        when(productServiceMock.get(1L)).thenReturn(productMock);
+        when(productServiceMock.get("1")).thenReturn(productMock);
 
         //Act
-        Product productTest = productServiceMock.enable(1L);
+        Product productTest = productServiceMock.enable("1");
 
         //Verify
         assertNotNull(productTest);
@@ -74,10 +73,10 @@ class ProductServiceTest {
     void givenValidProduct_whenDisabled_thenReturnsSuccessfully() throws Exception {
         //Arrange
         when(writeProductPersistenceAdapter.save(any())).thenReturn(productMock);
-        when(productServiceMock.get(1L)).thenReturn(productMock);
+        when(productServiceMock.get("1")).thenReturn(productMock);
 
         //Act
-        Product productTest = productServiceMock.disable(1L);
+        Product productTest = productServiceMock.disable("1");
 
         //Assert
         assertNotNull(productTest);

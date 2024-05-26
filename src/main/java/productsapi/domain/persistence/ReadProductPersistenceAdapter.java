@@ -16,10 +16,16 @@ public class ReadProductPersistenceAdapter implements ReadProductPersistencePort
     }
 
     @Override
-    public Product get(Long id) {
+    public Product get(String id) {
         ProductEntity productEntity = productRepository.get(id);
         Product product = new Product();
-        BeanUtils.copyProperties(productEntity, product);
-        return product;
+
+        if (productEntity != null) {
+            BeanUtils.copyProperties(productEntity, product);
+            return product;
+        } else {
+            return null;
+        }
+
     }
 }

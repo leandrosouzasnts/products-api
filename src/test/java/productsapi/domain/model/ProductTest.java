@@ -2,21 +2,19 @@ package productsapi.domain.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import productsapi.domain.model.enums.Status;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class ProductTest {
 
     Product productMock;
 
     @BeforeEach
     void setUp(){
-        productMock = new Product(1L, "Product 1", new BigDecimal("10.00"), Status.DISABLED);
+        productMock = new Product("1", "Product 1", new BigDecimal("10.00"), Status.DISABLED);
     }
 
     @Test

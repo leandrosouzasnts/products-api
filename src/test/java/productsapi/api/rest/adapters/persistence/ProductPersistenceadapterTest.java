@@ -1,4 +1,4 @@
-package productsapi.adapters.persistence;
+package productsapi.api.rest.adapters.persistence;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class ProductPersistenceadapterTest {
     @BeforeEach
     void setUp(){
         productMock = new ProductEntity();
-        productMock.setId(1L);
+        productMock.setId("1");
         productMock.setName("Product test");
         productMock.setPrice(BigDecimal.valueOf(100));
         productMock.setStatus(Status.ENABLED);

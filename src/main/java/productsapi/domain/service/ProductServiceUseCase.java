@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 public interface ProductServiceUseCase {
 
-    Product get(Long productId);
+    Product get(String productId);
     Product create(String name, BigDecimal price) throws Exception;
-    Product enable(Long productId);
-    Product disable(Long productId);
+    Product enable(String productId);
+    Product disable(String productId);
 }

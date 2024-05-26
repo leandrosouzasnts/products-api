@@ -23,8 +23,14 @@ public class ProductContoller {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> findByProductId(@PathVariable Long productId) {
-        // ToDo Corrigir expcetion find by id e retornar record do respose personalizado
-        return ResponseEntity.ok(productServiceUseCase.get(productId));
+    public ResponseEntity<Product> findByProductId(@PathVariable String productId) {
+        Product product = productServiceUseCase.get(productId);
+
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
